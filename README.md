@@ -1,9 +1,11 @@
 # dbhelper
 
-##### 一个简单的基于Spring JdbcTemplate帮助包 
+##### 一个简单的基于Spring JdbcTemplate帮助包 (暂时只支持mysql)
 
 
 1、配置
+
+
 在Spring配置文件（applicationContext.xml）中增加
 ```
 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -23,13 +25,13 @@ public class DbHelperImpl implements DbHelper {
 
 	private final static Logger log = LoggerFactory.getLogger(DbHelperImpl.class);
   
-  @Repository
+  	@Repository
 	private JdbcTemplate jdbcTemplate;
 ```
 
 2、使用
 ```
-  /**
+  	/**
 	 * 创建一条纪录
 	 * 
 	 * @param domain
