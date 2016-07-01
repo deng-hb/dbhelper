@@ -1,14 +1,10 @@
 package com.denghb.dbhelper;
 
 import java.util.List;
-import java.util.Map;
-
-import javax.jws.soap.SOAPBinding.Use;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
@@ -21,9 +17,6 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 
 	@Autowired
 	private DbHelper db;
-	
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
 
 	@Test
 	public void insert() {
@@ -83,6 +76,7 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 		// sql.append("select id,name,mobile from user");
 		// sql.append("select * from user");
 		sql.append(DbHelperUtils.getSelectSql(User.class));
+		
 		Paging paging = new UserFilter();
 		paging.setSort(true);
 		paging.setPage(10L);
