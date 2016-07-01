@@ -31,7 +31,7 @@ git clone https://github.com/deng-hb/dbhelper.git
 </bean>
 ```
 Or 使用注解（jdbcTemplate需要在配置中）
-```
+```java
 @Repository
 public class DbHelperImpl implements DbHelper {
 
