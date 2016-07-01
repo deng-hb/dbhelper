@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-import com.denghb.dbhelper.User;
 import com.denghb.dbhelper.annotation.Column;
 import com.denghb.dbhelper.annotation.Id;
 import com.denghb.dbhelper.annotation.Table;
