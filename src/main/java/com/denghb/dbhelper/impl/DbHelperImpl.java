@@ -226,7 +226,7 @@ public class DbHelperImpl implements DbHelper {
 				totalSql += sql.substring(fromIndex, sql.length());
 			}
 
-			int total = queryForObject(totalSql, Integer.class, objects);
+			long total = queryForObject(totalSql, Long.class, objects);
 
 			paging.setTotal(total);
 			if (0 == total) {
