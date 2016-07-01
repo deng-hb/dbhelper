@@ -3,7 +3,7 @@
 ##### 一个简单的基于Spring JdbcTemplate帮助包 (暂时只支持mysql)
 
 1、下载
-```java
+```xml
 <dependency>
   <groupId>com.denghb</groupId>
   <artifactId>dbhelper</artifactId>
@@ -19,7 +19,7 @@ git clone https://github.com/deng-hb/dbhelper.git
 
 
 在Spring配置文件（applicationContext.xml）中增加
-```
+```xml
 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 	<property name="dataSource">
 		<ref bean="dataSource" />
@@ -42,7 +42,7 @@ public class DbHelperImpl implements DbHelper {
 ```
 
 3、使用
-```
+```java
   	/**
 	 * 创建一条纪录
 	 * 
