@@ -42,7 +42,8 @@ public interface DbHelper {
 
 	/**
 	 * 查询并返回分页
-	 * 
+	 * 参考
+	 * {@link com.denghb.dbhelper.DbHelper.list}
 	 * @param sql
 	 * @param clazz
 	 * @param paging
@@ -52,6 +53,33 @@ public interface DbHelper {
 
 	/**
 	 * 查询列表
+	 * 
+	 * 
+	 * <pre>
+	 * 
+	 * Example
+	 * 
+	 * Bean:
+	 * public class User implements Serializable {
+	 * 	
+	 *	private String name;
+	 *  
+	 *	public String getName() {
+	 *		return name;
+	 *	}
+	 *
+	 *	public void setName(String name) {
+	 *		this.name = name;
+	 *	}
+	 *}
+	 *  
+	 * SQL:
+	 * select c_name_v as name from user;
+	 * 
+	 * 只要是列名和对象字段名一致就能反射赋值
+	 * 
+	 * @{link BeanPropertyRowMapper}
+	 * </pre>
 	 * 
 	 * @param sql
 	 * @param clazz

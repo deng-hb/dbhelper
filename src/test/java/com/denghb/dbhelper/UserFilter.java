@@ -8,7 +8,7 @@ public class UserFilter extends Paging {
 
 	@Override
 	public String[] getSorts() {
-		return new String[] { "id" };
+		return new String[] { "id", "email" };
 	}
 
 }

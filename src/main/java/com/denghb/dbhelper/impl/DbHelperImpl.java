@@ -1,7 +1,6 @@
 package com.denghb.dbhelper.impl;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +15,7 @@ import com.denghb.dbhelper.annotation.Column;
 import com.denghb.dbhelper.annotation.Id;
 import com.denghb.dbhelper.domain.Paging;
 import com.denghb.dbhelper.domain.PagingResult;
-import com.denghb.dbhelper.utils.SqlUtils;
+import com.denghb.dbhelper.utils.DbHelperUtils;
 
 /**
  * 
@@ -48,7 +47,7 @@ public class DbHelperImpl implements DbHelper {
 		List<Object> params = new ArrayList<Object>();
 
 		sql.append("insert into ");
-		sql.append(SqlUtils.getTableName(object.getClass()));
+		sql.append(DbHelperUtils.getTableName(object.getClass()));
 		sql.append(" (");
 
 		// 计数器
@@ -59,8 +58,7 @@ public class DbHelperImpl implements DbHelper {
 		try {
 			// 分析列
 			Field[] fields = object.getClass().getDeclaredFields();
-			for (int i = 0; i < fields.length; i++) {
-				Field field = fields[i];
+			for (Field field : fields) {
 				String fieldName = field.getName();
 				if ("serialVersionUID".equals(fieldName)) {
 					continue;
@@ -75,8 +73,7 @@ public class DbHelperImpl implements DbHelper {
 					// 没有列注解的直接跳过
 					continue;
 				}
-
-				Object value = SqlUtils.getValue(object, fieldName);
+				Object value = DbHelperUtils.getFieldValue(object, fieldName);
 				if (value == null) {
 					// 如果参数值是null就直接跳过（不允许覆盖为null值，规范要求更新的每个字段都要有值，没有值就是空字符串）
 					continue;
@@ -84,19 +81,16 @@ public class DbHelperImpl implements DbHelper {
 
 				if (count != 0) {
 					sql.append(',');
+					paramsSql.append(',');
 				}
+				count++;
 				// 字段名
 				sql.append('`');
 				sql.append(column.name());
 				sql.append('`');
-
-				if (count != 0) {
-					paramsSql.append(',');
-				}
+				
 				paramsSql.append('?');
-
 				params.add(value);
-				count++;
 			}
 			sql.append(") values (");
 			sql.append(paramsSql);
@@ -131,7 +125,7 @@ public class DbHelperImpl implements DbHelper {
 		List<Object> params = new ArrayList<Object>();
 
 		sql.append("update ");
-		sql.append(SqlUtils.getTableName(object.getClass()));
+		sql.append(DbHelperUtils.getTableName(object.getClass()));
 		sql.append(" set ");
 
 		int count = 0;// 计算“，”
@@ -158,7 +152,7 @@ public class DbHelperImpl implements DbHelper {
 					// 没有列注解的直接跳过
 					continue;
 				}
-				Object value = SqlUtils.getValue(object, fieldName);
+				Object value = DbHelperUtils.getFieldValue(object, fieldName);
 				if (value == null) {
 					// 如果参数值是null就直接跳过（不允许覆盖为null值，规范要求更新的每个字段都要有值，没有值就是空字符串）
 					continue;
@@ -188,7 +182,7 @@ public class DbHelperImpl implements DbHelper {
 		sql.append('`');
 		sql.append(column.name());
 		sql.append("` = ?");
-		params.add(SqlUtils.getValue(object, idField.getName()));
+		params.add(DbHelperUtils.getFieldValue(object, idField.getName()));
 
 		Object[] objects = params.toArray();
 
@@ -221,7 +215,9 @@ public class DbHelperImpl implements DbHelper {
 		if (0 != rows) {
 			// 先查总数
 			String totalSql = "select count(*) as size ";
-			int fromIndex = sql.indexOf("from");
+
+			String tempSql = sql.toString().toLowerCase();
+			int fromIndex = tempSql.indexOf("from");
 			if (0 < fromIndex) {
 				totalSql += sql.substring(fromIndex, sql.length());
 			}
@@ -239,24 +235,29 @@ public class DbHelperImpl implements DbHelper {
 		long page = paging.getPage() - 1;
 
 		// 排序
-		String[] sorts = paging.getSorts();
-		if (null != sorts && 0 < sorts.length) {
-			// TODO 排序字段
-			sql.append(" order by ");
-			for (int i = 0; i < sorts.length; i++) {
-				if (i != 0) {
-					sql.append(",");
-				}
-				sql.append('`');
-				sql.append(sorts[i]);
-				sql.append('`');
-			}
+		if (paging.isSort()) {
+			// 判断是否有排序字段
+			String[] sorts = paging.getSorts();
+			if (null != sorts && 0 < sorts.length) {
+				int sortIndex = paging.getSortIndex();
 
-			// 排序方式
-			if (paging.isDesc()) {
-				sql.append(" desc");
-			} else {
-				sql.append(" asc");
+				// 大于排序的长度默认最后一个
+				if (sortIndex >= sorts.length) {
+					sortIndex = sorts.length - 1;
+				}
+				// TODO 排序字段
+				sql.append(" order by ");
+
+				sql.append('`');
+				sql.append(sorts[paging.getSortIndex()]);
+				sql.append('`');
+
+				// 排序方式
+				if (paging.isDesc()) {
+					sql.append(" desc");
+				} else {
+					sql.append(" asc");
+				}
 			}
 		}
 
@@ -286,13 +287,13 @@ public class DbHelperImpl implements DbHelper {
 
 		Object[] objects = args;
 		if (null == objects || 0 == objects.length || objects[0] == null) {
-			if (isSingleClass(clazz)) {
+			if (DbHelperUtils.isSingleClass(clazz)) {
 				list = jdbcTemplate.queryForList(sql, clazz);
 			} else {
 				list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(clazz));
 			}
 		} else {
-			if (isSingleClass(clazz)) {
+			if (DbHelperUtils.isSingleClass(clazz)) {
 				list = jdbcTemplate.queryForList(sql, clazz, args);
 			} else {
 				list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(clazz), args);
@@ -303,15 +304,6 @@ public class DbHelperImpl implements DbHelper {
 			log.debug("execute time:{}ms", System.currentTimeMillis() - start);
 		}
 		return list;
-	}
-
-	// TODO 基本类型
-	private static <T> boolean isSingleClass(Class<T> clazz) {
-		if (clazz.equals(Integer.class) || clazz.equals(String.class) || clazz.equals(Double.class)
-				|| clazz.equals(Long.class) || clazz.equals(BigDecimal.class)) {
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -325,10 +317,12 @@ public class DbHelperImpl implements DbHelper {
 
 	@Override
 	public <T> T queryById(Class<T> clazz, Object id) {
-		StringBuffer sb = new StringBuffer("select * from ");
-		sb.append(SqlUtils.getTableName(clazz));
+		StringBuffer sb = new StringBuffer("select ");
+		sb.append(DbHelperUtils.getTableColumnAsFieldName(clazz));
+		sb.append(" from ");
+		sb.append(DbHelperUtils.getTableName(clazz));
 		sb.append(" where `");
-		sb.append(SqlUtils.getIdColumn(clazz));
+		sb.append(DbHelperUtils.getIdColumn(clazz));
 		sb.append("` = ?");
 		String sql = sb.toString();
 
@@ -343,9 +337,9 @@ public class DbHelperImpl implements DbHelper {
 	@Override
 	public <T> boolean deleteById(Class<T> clazz, Object id) {
 		StringBuffer sb = new StringBuffer("delete from ");
-		sb.append(SqlUtils.getTableName(clazz));
+		sb.append(DbHelperUtils.getTableName(clazz));
 		sb.append(" where `");
-		sb.append(SqlUtils.getIdColumn(clazz));
+		sb.append(DbHelperUtils.getIdColumn(clazz));
 		sb.append("` = ?");
 		return 1 == execute(sb.toString(), id);
 	}

@@ -24,12 +24,19 @@ public abstract class Paging implements Serializable {
 	/** 总页数 */
 	private long totalPage = 1;
 
+	/** 是否排序 */
+	private boolean isSort = false;
+
 	/** 排序字段 */
 	private String[] sorts;
+
+	/** 排序字段下标 默认：0 */
+	private int sortIndex = 0;
 
 	/** 默认降序 */
 	private boolean desc = true;
 
+	/** 参数列表 */
 	private List<Object> params = new ArrayList<Object>();
 
 	public long getTotal() {
@@ -99,11 +106,26 @@ public abstract class Paging implements Serializable {
 		this.params = params;
 	}
 
+	public boolean isSort() {
+		return isSort;
+	}
+
+	public void setSort(boolean isSort) {
+		this.isSort = isSort;
+	}
+
+	public int getSortIndex() {
+		return sortIndex;
+	}
+
+	public void setSortIndex(int sortIndex) {
+		this.sortIndex = sortIndex;
+	}
+
 	@Override
 	public String toString() {
 		return "Paging [total=" + total + ", page=" + page + ", rows=" + rows + ", totalPage=" + totalPage + ", sorts="
 				+ Arrays.toString(sorts) + ", desc=" + desc + ", params=" + params + "]";
 	}
-
 
 }

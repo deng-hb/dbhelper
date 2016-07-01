@@ -1,33 +1,43 @@
 package com.denghb.dbhelper;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.jws.soap.SOAPBinding.Use;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.denghb.dbhelper.domain.Paging;
 import com.denghb.dbhelper.domain.PagingResult;
-import com.denghb.dbhelper.utils.SqlUtils;
+import com.denghb.dbhelper.utils.DbHelperUtils;
 
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 public class AppTest extends AbstractJUnit4SpringContextTests {
 
 	@Autowired
 	private DbHelper db;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Test
 	public void insert() {
-		User user = new User();
-		user.setAge(18);
-		user.setEmail("insert@qq.com");
-		user.setName("张三");
+		for (int i = 0; i < 100000; i++) {
 
-		boolean res = db.insert(user);
-		Assert.assertTrue(res);
-		System.out.println("insert:" + user);
+			User user = new User();
+			user.setAge(18);
+			user.setEmail("insert@qq.com");
+			user.setName("张三");
+
+			boolean res = db.insert(user);
+			Assert.assertTrue(res);
+			System.out.println("insert:" + user);
+		}
 	}
 
 	@Test
@@ -43,7 +53,7 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void queryById() {
-		User user = db.queryById(User.class, 1);
+		User user = db.queryById(User.class, 2);
 		Assert.assertNotNull(user);
 		System.out.println("queryById:" + user);
 	}
@@ -59,13 +69,23 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 	}
 
 	@Test
+	public void listArray() {
+		List<Integer> list = db.list("select id from user where name = ?", Integer.class, "张三");
+		Assert.assertNotNull(list);
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+	}
+
+	@Test
 	public void listPage() {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select * from ");
-		sql.append(SqlUtils.getTableName(User.class));
-
+		// sql.append("select id,name,mobile from user");
+		// sql.append("select * from user");
+		sql.append(DbHelperUtils.getSelectSql(User.class));
 		Paging paging = new UserFilter();
-		paging.setDesc(true);
+		paging.setSort(true);
+		paging.setPage(10L);
 		PagingResult<User> result = db.list(sql, User.class, paging);
 
 		List<User> list = result.getList();
