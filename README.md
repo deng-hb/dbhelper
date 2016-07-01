@@ -2,8 +2,20 @@
 
 ##### 一个简单的基于Spring JdbcTemplate帮助包 (暂时只支持mysql)
 
+1、下载
+```java
+<dependency>
+  <groupId>com.denghb</groupId>
+  <artifactId>dbhelper</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+Or 
+```
+git clone https://github.com/deng-hb/dbhelper.git
+```
 
-1、配置
+2、配置
 
 
 在Spring配置文件（applicationContext.xml）中增加
@@ -29,7 +41,7 @@ public class DbHelperImpl implements DbHelper {
 	private JdbcTemplate jdbcTemplate;
 ```
 
-2、使用
+3、使用
 ```
   	/**
 	 * 创建一条纪录
@@ -106,9 +118,9 @@ public class DbHelperImpl implements DbHelper {
 ```
 
 
-3、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper/blob/master/src/test/java/com/denghb/dbhelper/AppTest.java)
+4、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper/blob/master/src/test/java/com/denghb/dbhelper/AppTest.java)
 
-4、欢迎拍砖（issues||i<at>denghb.com）
+5、欢迎拍砖（issues||i<at>denghb.com）
 
-5、木有版权，随意更改
+6、木有版权，随意更改
 
