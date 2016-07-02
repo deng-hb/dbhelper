@@ -285,8 +285,7 @@ public class DbHelperImpl implements DbHelper {
 		}
 		List<T> list = null;
 
-		Object[] objects = args;
-		if (null == objects || 0 == objects.length || objects[0] == null) {
+		if (null == args || 0 == args.length || args[0] == null) {
 			if (DbHelperUtils.isSingleClass(clazz)) {
 				list = jdbcTemplate.queryForList(sql, clazz);
 			} else {

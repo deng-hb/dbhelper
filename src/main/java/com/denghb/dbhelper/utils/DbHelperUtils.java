@@ -24,7 +24,7 @@ public class DbHelperUtils {
 	/**
 	 * 基本类型
 	 */
-	private static Set<Class> classes = new HashSet<Class>();
+	private static Set<Object> classes = new HashSet<Object>();
 
 	static {
 		classes.add(java.lang.Integer.class);
