@@ -7,7 +7,7 @@
 <dependency>
   <groupId>com.denghb</groupId>
   <artifactId>dbhelper</artifactId>
-  <version>1.0</version>
+  <version>1.3</version>
 </dependency>
 ```
 Or 
@@ -30,20 +30,18 @@ git clone https://github.com/deng-hb/dbhelper.git
 	<property name="jdbcTemplate" ref="jdbcTemplate"></property>		
 </bean>
 ```
-Or 使用注解（jdbcTemplate需要在配置中）
+Or 下载源码使用注解（jdbcTemplate需要在配置中）
 ```java
 @Repository
 public class DbHelperImpl implements DbHelper {
 
-	private final static Logger log = LoggerFactory.getLogger(DbHelperImpl.class);
-  
   	@Repository
 	private JdbcTemplate jdbcTemplate;
 ```
 
 3、使用
 ```java
-  	/**
+	/**
 	 * 创建一条纪录
 	 * 
 	 * @param domain
@@ -70,7 +68,8 @@ public class DbHelperImpl implements DbHelper {
 
 	/**
 	 * 查询并返回分页
-	 * 
+	 * 参考
+	 * {@link com.denghb.dbhelper.DbHelper.list}
 	 * @param sql
 	 * @param clazz
 	 * @param paging
@@ -80,6 +79,33 @@ public class DbHelperImpl implements DbHelper {
 
 	/**
 	 * 查询列表
+	 * 
+	 * 
+	 * <pre>
+	 * 
+	 * Example
+	 * 
+	 * Bean:
+	 * public class User implements Serializable {
+	 * 	
+	 *	private String name;
+	 *  
+	 *	public String getName() {
+	 *		return name;
+	 *	}
+	 *
+	 *	public void setName(String name) {
+	 *		this.name = name;
+	 *	}
+	 *}
+	 *  
+	 * SQL:
+	 * select c_name_v as name from user;
+	 * 
+	 * 只要是列名和对象字段名一致就能反射赋值
+	 * 
+	 * @{link BeanPropertyRowMapper}
+	 * </pre>
 	 * 
 	 * @param sql
 	 * @param clazz
@@ -117,10 +143,20 @@ public class DbHelperImpl implements DbHelper {
 	public <T> boolean deleteById(Class<T> clazz, Object id);
 ```
 
+4、兼容
+```xml
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-jdbc</artifactId>
+	<version>3.1.0.RELEASE</version>
+</dependency>
+```
+及以上版本
 
-4、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper-test)
 
-5、欢迎拍砖（issues||i<at>denghb.com）
+5、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper-test)
 
-6、木有版权，随意更改
+6、欢迎拍砖（issues||i<at>denghb.com）
+
+7、木有版权，随意更改
 
