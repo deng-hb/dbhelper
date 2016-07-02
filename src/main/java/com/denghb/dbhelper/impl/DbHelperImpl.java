@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -24,7 +24,7 @@ import com.denghb.dbhelper.utils.DbHelperUtils;
  */
 public class DbHelperImpl implements DbHelper {
 
-	private final static Logger log = LoggerFactory.getLogger(DbHelperImpl.class);
+	private final static Log log = LogFactory.getLog(DbHelperImpl.class);
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -88,7 +88,7 @@ public class DbHelperImpl implements DbHelper {
 				sql.append('`');
 				sql.append(column.name());
 				sql.append('`');
-				
+
 				paramsSql.append('?');
 				params.add(value);
 			}
@@ -200,7 +200,7 @@ public class DbHelperImpl implements DbHelper {
 		}
 		int res = jdbcTemplate.update(sql, args);
 		if (log.isDebugEnabled()) {
-			log.debug("execute time:{}ms", System.currentTimeMillis() - start);
+			log.debug("execute time:" + (System.currentTimeMillis() - start) + "ms");
 		}
 		return res;
 	}
@@ -280,8 +280,8 @@ public class DbHelperImpl implements DbHelper {
 		long start = System.currentTimeMillis();
 
 		if (log.isDebugEnabled()) {
-			log.debug("params:[{}]", args);
-			log.debug("query sql:[{}]", sql);
+			log.debug("params:" + Arrays.toString(args));
+			log.debug("query sql:" + sql);
 		}
 		List<T> list = null;
 
@@ -300,7 +300,7 @@ public class DbHelperImpl implements DbHelper {
 		}
 		// 执行时间
 		if (log.isDebugEnabled()) {
-			log.debug("execute time:{}ms", System.currentTimeMillis() - start);
+			log.debug("execute time:" + (System.currentTimeMillis() - start) + "ms");
 		}
 		return list;
 	}

@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 import com.denghb.dbhelper.annotation.Column;
@@ -19,7 +19,7 @@ import com.denghb.dbhelper.annotation.Table;
  *
  */
 public class DbHelperUtils {
-	private final static Logger log = LoggerFactory.getLogger(DbHelperUtils.class);
+	private final static Log log = LogFactory.getLog(DbHelperUtils.class);
 
 	/**
 	 * 基本类型
