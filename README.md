@@ -118,7 +118,7 @@ public class DbHelperImpl implements DbHelper {
 ```
 
 
-4、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper/blob/master/src/test/java/com/denghb/dbhelper/AppTest.java)
+4、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper-test)
 
 5、欢迎拍砖（issues||i<at>denghb.com）
 
