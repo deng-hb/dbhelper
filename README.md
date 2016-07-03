@@ -143,16 +143,7 @@ public class DbHelperImpl implements DbHelper {
 	public <T> boolean deleteById(Class<T> clazz, Object id);
 ```
 
-4、兼容
-```xml
-<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-jdbc</artifactId>
-	<version>3.1.0.RELEASE</version>
-</dependency>
-```
-及以上版本
-
+4、兼容 spring-jdbc 3.1.0.RELEASE 及以上版本
 
 5、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper-test)
 
