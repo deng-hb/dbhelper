@@ -145,7 +145,9 @@ public class DbHelperImpl implements DbHelper {
 
 4、兼容 spring-jdbc 3.1.0.RELEASE 及以上版本
 
-5、更多请参考 [TestCase](https://github.com/deng-hb/dbhelper-test)
+5、数据库表生成对应实体[Generate](https://github.com/deng-hb/dbhelper-test/blob/master/src/test/java/com/denghb/dbhelper/generate/GenerateDomainFromTable.java)
+
+5、更多请参考 [Test Project](https://github.com/deng-hb/dbhelper-test)
 
 6、欢迎拍砖（issues||i<at>denghb.com）
 
