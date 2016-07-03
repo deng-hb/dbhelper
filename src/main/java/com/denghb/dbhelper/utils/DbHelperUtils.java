@@ -24,7 +24,7 @@ public class DbHelperUtils {
 	/**
 	 * 基本类型
 	 */
-	private static Set<Object> classes = new HashSet<Object>();
+	private static Set<Class<?>> classes = new HashSet<Class<?>>();
 
 	static {
 		classes.add(java.lang.Integer.class);
@@ -34,10 +34,11 @@ public class DbHelperUtils {
 		classes.add(java.lang.Double.class);
 		classes.add(java.lang.String.class);
 		classes.add(java.math.BigDecimal.class);
-		
+
 		classes.add(java.sql.Time.class);
 		classes.add(java.util.Date.class);
 		classes.add(java.sql.Timestamp.class);
+
 	}
 
 	/**
