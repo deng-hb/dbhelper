@@ -149,7 +149,7 @@ public class DbHelperImpl implements DbHelper {
 
 5、更多请参考 [Test Project](https://github.com/deng-hb/dbhelper-test)
 
-6、欢迎拍砖（issues||i<at>denghb.com）
+6、欢迎拍砖（issues||i#denghb.com）#->@
 
 7、License
 ```
