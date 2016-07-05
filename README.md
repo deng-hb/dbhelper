@@ -2,7 +2,7 @@
 
 ##### 一个简单的基于Spring JdbcTemplate帮助包 (暂时只支持mysql)
 
-1、下载
+1、Maven
 ```xml
 <dependency>
   <groupId>com.denghb</groupId>
