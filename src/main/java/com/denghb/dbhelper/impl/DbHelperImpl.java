@@ -113,9 +113,8 @@ public class DbHelperImpl implements DbHelper {
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
-		return false;
-
 	}
 
 	@Override
@@ -172,14 +171,15 @@ public class DbHelperImpl implements DbHelper {
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
 		sql.append(" where ");
 		if (null == idField) {
-			throw new RuntimeException("Id Error");
+			throw new RuntimeException("Id not find");
 		}
 		Column column = idField.getAnnotation(Column.class);
 		if (null == column) {
-			throw new RuntimeException("Id Error");
+			throw new RuntimeException("Id not find");
 		}
 		sql.append('`');
 		sql.append(column.name());
