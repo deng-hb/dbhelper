@@ -55,6 +55,7 @@ public class DbHelperImpl implements DbHelper {
 
 		// 主键字段
 		Field idField = null;
+		boolean idAuto = false;
 		try {
 			// 分析列
 			Field[] fields = object.getClass().getDeclaredFields();
@@ -67,6 +68,7 @@ public class DbHelperImpl implements DbHelper {
 				Id id = field.getAnnotation(Id.class);
 				if (null != id) {
 					idField = field;
+					idAuto = id.auto();
 				}
 				Column column = field.getAnnotation(Column.class);
 				if (null == column) {
@@ -102,7 +104,7 @@ public class DbHelperImpl implements DbHelper {
 			boolean res = 1 == execute(sql.toString(), objects);
 
 			// TODO 成功了获取自动生成的ID
-			if (res && null != idField) {
+			if (res && idAuto) {
 				Integer id = queryForObject("SELECT LAST_INSERT_ID() as id", Integer.class);
 				idField.setAccessible(true);
 				idField.set(object, id);
@@ -245,7 +247,7 @@ public class DbHelperImpl implements DbHelper {
 				if (sortIndex >= sorts.length) {
 					sortIndex = sorts.length - 1;
 				}
-				// TODO 排序字段
+				// 排序字段
 				sql.append(" order by ");
 
 				sql.append('`');
@@ -262,7 +264,7 @@ public class DbHelperImpl implements DbHelper {
 		}
 
 		if (0 != rows) {
-			// 分页
+			// TODO 分页mysql
 			sql.append(" limit ");
 			sql.append(page * rows);
 			sql.append(",");
