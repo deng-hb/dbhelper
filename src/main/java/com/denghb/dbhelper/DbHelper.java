@@ -22,7 +22,7 @@ import com.denghb.dbhelper.annotation.Id;
  * 
  * @author denghb
  */
-public abstract class DbHelper {
+public class DbHelper {
 
 	private final static Log log = LogFactory.getLog(DbHelper.class);
 
