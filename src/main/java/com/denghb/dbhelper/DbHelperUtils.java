@@ -1,4 +1,4 @@
-package com.denghb.dbhelper.utils;
+package com.denghb.dbhelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -47,7 +47,7 @@ public class DbHelperUtils {
 	 * @param clazz
 	 * @return
 	 */
-	public static <T> boolean isSingleClass(Class<T> clazz) {
+	public static <T> boolean isSingleClass(final Class<T> clazz) {
 		return classes.contains(clazz);
 	}
 
@@ -58,7 +58,7 @@ public class DbHelperUtils {
 	 * @param fieldName
 	 * @return
 	 */
-	public static <T> Object getFieldValue(Object object, String fieldName) {
+	public static <T> Object getFieldValue(final Object object, final String fieldName) {
 		String up1 = firstCharToUpperCase(fieldName);
 		Object value = null;
 		try {
@@ -75,7 +75,7 @@ public class DbHelperUtils {
 	}
 
 	// 首字母转大写
-	public static String firstCharToUpperCase(String string) {
+	public static String firstCharToUpperCase(final String string) {
 		if (StringUtils.hasText(string)) {
 			int length = string.length();
 			// 获取第一个转大写
@@ -100,7 +100,7 @@ public class DbHelperUtils {
 	 * 
 	 * @return
 	 */
-	public static <T> String getTableName(Class<T> clazz) {
+	public static <T> String getTableName(final Class<T> clazz) {
 		// 获取表名
 		Table table = clazz.getAnnotation(Table.class);
 		if (null == table) {
@@ -119,7 +119,7 @@ public class DbHelperUtils {
 		return tableName.toString();
 	}
 
-	public static <T> String getIdColumn(Class<T> clazz) {
+	public static <T> String getIdColumn(final Class<T> clazz) {
 		// 分析列
 		Field[] fields = clazz.getDeclaredFields();
 		if (null == fields) {
@@ -149,7 +149,7 @@ public class DbHelperUtils {
 	 * @param clazz
 	 * @return
 	 */
-	public static <T> String getTableColumnAsFieldName(Class<T> clazz) {
+	public static <T> String getTableColumnAsFieldName(final Class<T> clazz) {
 		StringBuffer stringBuffer = new StringBuffer();
 		// 分析列
 		Field[] fields = clazz.getDeclaredFields();
@@ -183,7 +183,7 @@ public class DbHelperUtils {
 	 * @param clazz
 	 * @return
 	 */
-	public static <T> String getSelectSql(Class<T> clazz) {
+	public static <T> String getSelectSql(final Class<T> clazz) {
 		StringBuffer sql = new StringBuffer("select ");
 		sql.append(DbHelperUtils.getTableColumnAsFieldName(clazz));
 		sql.append(" from ");
