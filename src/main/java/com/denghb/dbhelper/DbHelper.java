@@ -58,9 +58,6 @@ public class DbHelper {
 		// 计数器
 		int count = 0;
 
-		// 主键字段
-		Field idField = null;
-		boolean idAuto = false;
 		try {
 			// 分析列
 			Field[] fields = object.getClass().getDeclaredFields();
@@ -68,12 +65,6 @@ public class DbHelper {
 				String fieldName = field.getName();
 				if ("serialVersionUID".equals(fieldName)) {
 					continue;
-				}
-				// ID
-				Id id = field.getAnnotation(Id.class);
-				if (null != id) {
-					idField = field;
-					idAuto = id.auto();
 				}
 				Column column = field.getAnnotation(Column.class);
 				if (null == column) {
@@ -108,16 +99,6 @@ public class DbHelper {
 			// 执行insert
 			boolean res = 1 == execute(sql.toString(), objects);
 
-			// TODO MySql 成功了获取自动生成的ID
-			if (res && idAuto) {
-				try {
-					Long id = queryForObject("select LAST_INSERT_ID() as id", Long.class);
-					idField.setAccessible(true);
-					idField.set(object, id);
-				} catch (Exception e) {
-					log.warn("id only MySql ..." + e.getMessage(), e);
-				}
-			}
 			return res;
 
 		} catch (Exception e) {
