@@ -169,7 +169,7 @@ public class DbHelperUtils {
 				}
 				stringBuffer.append('`');
 				stringBuffer.append(column.name());
-				stringBuffer.append("` as ｀");
+				stringBuffer.append("` as `");
 				stringBuffer.append(fieldName);
 				stringBuffer.append('`');
 				++i;
