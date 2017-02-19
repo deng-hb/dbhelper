@@ -1,4 +1,4 @@
-package com.denghb.dbhelper;
+package com.denghb.dbhelper.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -171,7 +171,7 @@ public class DbHelperUtils {
 				stringBuffer.append(column.name());
 				stringBuffer.append("` as `");
 				stringBuffer.append(fieldName);
-				stringBuffer.append('`');
+				stringBuffer.append("`");
 				++i;
 			}
 		}
