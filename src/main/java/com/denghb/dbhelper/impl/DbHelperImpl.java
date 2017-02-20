@@ -85,6 +85,9 @@ public class DbHelperImpl implements DbHelper {
                     // 如果参数值是null就直接跳过（不允许覆盖为null值，规范要求更新的每个字段都要有值，没有值就是空字符串）
                     continue;
                 }
+                if(null != id && null != value){
+                	idField = null;// ID有值不自动赋值
+                }
 
                 if (count != 0) {
                     sql.append(',');
