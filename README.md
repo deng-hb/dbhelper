@@ -7,7 +7,7 @@
 <dependency>
   <groupId>com.denghb</groupId>
   <artifactId>dbhelper</artifactId>
-  <version>1.5</version>
+  <version>3.0.1</version>
 </dependency>
 ```
 Or 
@@ -41,111 +41,85 @@ public class DbHelperImpl implements DbHelper {
 
 3、使用
 ```java
-	/**
-	 * 创建一条纪录
-	 * 
-	 * @param domain
-	 * @return
-	 */
-	public boolean insert(Object object);
+/**
+ * 创建一条纪录
+ *
+ * @param object
+ * @return
+ */
+public boolean insert(Object object);
 
-	/**
-	 * 更新一条纪录
-	 * 
-	 * @param domain
-	 * @return
-	 */
-	public boolean updateById(Object object);
+/**
+ * 更新一条纪录
+ *
+ * @param object
+ * @return
+ */
+public boolean updateById(Object object);
 
-	/**
-	 * 执行一条SQL
-	 * 
-	 * @param sql
-	 * @param args
-	 * @return
-	 */
-	public int execute(String sql, Object... args);
+/**
+ * 执行一条SQL
+ *
+ * @param sql
+ * @param args
+ * @return
+ */
+public int execute(String sql, Object... args);
 
-	/**
-	 * 查询并返回分页
-	 * 参考
-	 * {@link com.denghb.dbhelper.DbHelper.list}
-	 * @param sql
-	 * @param clazz
-	 * @param paging
-	 * @return
-	 */
-	public <T> PagingResult<T> list(StringBuffer sql, Class<T> clazz, Paging paging);
+/**
+ * 查询列表
+ *
+ * @param sql
+ * @param clazz
+ * @param args
+ * @return
+ */
+public <T> List<T> list(String sql, Class<T> clazz, Object... args);
 
-	/**
-	 * 查询列表
-	 * 
-	 * 
-	 * <pre>
-	 * 
-	 * Example
-	 * 
-	 * Bean:
-	 * public class User implements Serializable {
-	 * 	
-	 *	private String name;
-	 *  
-	 *	public String getName() {
-	 *		return name;
-	 *	}
-	 *
-	 *	public void setName(String name) {
-	 *		this.name = name;
-	 *	}
-	 *}
-	 *  
-	 * SQL:
-	 * select c_name_v as name from user;
-	 * 
-	 * 只要是列名和对象字段名一致就能反射赋值
-	 * 
-	 * @{link BeanPropertyRowMapper}
-	 * </pre>
-	 * 
-	 * @param sql
-	 * @param clazz
-	 * @param args
-	 * @return
-	 */
-	public <T> List<T> list(String sql, Class<T> clazz, Object... args);
 
-	/**
-	 * 指定参数查询返回对象
-	 * 
-	 * @param sql
-	 * @param clazz
-	 * @param args
-	 * @return
-	 */
-	public <T> T queryForObject(String sql, Class<T> clazz, Object... args);
+/**
+ * 查询并分页
+ *
+ * @param sql
+ * @param clazz
+ * @param paging
+ * @param <T>
+ * @return
+ */
+public <T> PagingResult<T> list(StringBuffer sql, Class<T> clazz, Paging paging);
 
-	/**
-	 * 查询一条纪录
-	 * 
-	 * @param clazz
-	 * @param id
-	 * @return
-	 */
-	public <T> T queryById(Class<T> clazz, Object id);
+/**
+ * 指定参数查询返回对象
+ *
+ * @param sql
+ * @param clazz
+ * @param args
+ * @return
+ */
+public <T> T queryForObject(String sql, Class<T> clazz, Object... args);
 
-	/**
-	 * 物理删除
-	 * 
-	 * @param clazz
-	 * @param id
-	 * @return
-	 */
-	public <T> boolean deleteById(Class<T> clazz, Object id);
+/**
+ * 查询一条纪录
+ *
+ * @param clazz
+ * @param id
+ * @return
+ */
+public <T> T queryById(Class<T> clazz, Object id);
+
+/**
+ * 删除
+ *
+ * @param clazz
+ * @param id
+ * @return
+ */
+public <T> boolean deleteById(Class<T> clazz, Object id);
 ```
 
 4、兼容 spring-jdbc 3.1.0.RELEASE 及以上版本
 
-5、数据库表生成对应实体[Generate](https://github.com/deng-hb/dbhelper-test/blob/master/src/test/java/com/denghb/dbhelper/generate/GenerateDomainFromTable.java)
+5、数据库表生成对应实体[dbhelper-client](https://github.com/deng-hb/dbhelper-client)
 
 5、更多请参考 [Test Project](https://github.com/deng-hb/dbhelper-test)
 
