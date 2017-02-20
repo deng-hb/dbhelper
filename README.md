@@ -17,7 +17,6 @@ git clone https://github.com/deng-hb/dbhelper.git
 
 2、配置
 
-
 在Spring配置文件（applicationContext.xml）中增加
 ```xml
 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -38,6 +37,9 @@ public class DbHelperImpl implements DbHelper {
   	@Repository
 	private JdbcTemplate jdbcTemplate;
 ```
+Or SpringBoot
+参考[spring-cloud-example](https://github.com/deng-hb/spring-cloud-example)
+
 
 3、使用
 ```java
@@ -121,7 +123,7 @@ public <T> boolean deleteById(Class<T> clazz, Object id);
 
 5、数据库表生成对应实体[dbhelper-client](https://github.com/deng-hb/dbhelper-client)
 
-5、更多请参考 [Test Project](https://github.com/deng-hb/dbhelper-test)
+5、更多请参考 [Test Project](https://github.com/deng-hb/dbhelper-test) [running](https://github.com/deng-hb/running)
 
 6、欢迎拍砖（[issues](https://github.com/deng-hb/dbhelper/issues)||i#denghb.com）#->@
 
