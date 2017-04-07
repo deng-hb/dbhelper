@@ -9,8 +9,8 @@ import com.denghb.dbhelper.paging.PagingResult;
  * <pre>
  * 常用的一些数据库操作
  * </pre>
- * <p>
- * {@link https://github.com/deng-hb/dbhelper}
+ *
+ * https://github.com/deng-hb/dbhelper
  *
  * @author denghb
  */
@@ -20,7 +20,6 @@ public interface DbHelper {
      * 创建一条纪录
      *
      * @param object
-     * @return
      */
     public boolean insert(Object object);
 
@@ -28,7 +27,6 @@ public interface DbHelper {
      * 更新一条纪录
      *
      * @param object
-     * @return
      */
     public boolean updateById(Object object);
 
@@ -37,7 +35,6 @@ public interface DbHelper {
      *
      * @param sql
      * @param args
-     * @return
      */
     public int execute(String sql, Object... args);
 
@@ -47,7 +44,6 @@ public interface DbHelper {
      * @param sql
      * @param clazz
      * @param args
-     * @return
      */
     public <T> List<T> list(String sql, Class<T> clazz, Object... args);
 
@@ -59,7 +55,6 @@ public interface DbHelper {
      * @param clazz
      * @param paging
      * @param <T>
-     * @return
      */
     public <T> PagingResult<T> list(StringBuffer sql, Class<T> clazz, Paging paging);
 
@@ -69,7 +64,6 @@ public interface DbHelper {
      * @param sql
      * @param clazz
      * @param args
-     * @return
      */
     public <T> T queryForObject(String sql, Class<T> clazz, Object... args);
 
@@ -78,7 +72,6 @@ public interface DbHelper {
      *
      * @param clazz
      * @param id
-     * @return
      */
     public <T> T queryById(Class<T> clazz, Object id);
 
@@ -87,7 +80,6 @@ public interface DbHelper {
      *
      * @param clazz
      * @param id
-     * @return
      */
     public <T> boolean deleteById(Class<T> clazz, Object id);
 

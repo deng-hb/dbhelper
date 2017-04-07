@@ -45,7 +45,6 @@ public class DbHelperUtils {
 	 * 是否是基本类型
 	 * 
 	 * @param clazz
-	 * @return
 	 */
 	public static <T> boolean isSingleClass(final Class<T> clazz) {
 		return classes.contains(clazz);
@@ -56,7 +55,6 @@ public class DbHelperUtils {
 	 * 
 	 * @param object
 	 * @param fieldName
-	 * @return
 	 */
 	public static <T> Object getFieldValue(final Object object, final String fieldName) {
 		String up1 = firstCharToUpperCase(fieldName);
@@ -98,7 +96,6 @@ public class DbHelperUtils {
 	 * 
 	 * @param <T>
 	 * 
-	 * @return
 	 */
 	public static <T> String getTableName(final Class<T> clazz) {
 		// 获取表名
@@ -147,7 +144,6 @@ public class DbHelperUtils {
 	 * 获取列as字段
 	 * 
 	 * @param clazz
-	 * @return
 	 */
 	public static <T> String getTableColumnAsFieldName(final Class<T> clazz) {
 		StringBuffer stringBuffer = new StringBuffer();
@@ -182,7 +178,6 @@ public class DbHelperUtils {
 	 * 获取默认查询语句
 	 * 
 	 * @param clazz
-	 * @return
 	 */
 	public static <T> String getSelectSql(final Class<T> clazz) {
 		StringBuffer sql = new StringBuffer("select ");

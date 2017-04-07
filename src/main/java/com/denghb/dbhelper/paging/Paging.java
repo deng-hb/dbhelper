@@ -105,7 +105,6 @@ public abstract class Paging implements Serializable {
     /**
      * 设置需要排序的数据库字段
      *
-     * @return
      */
     public abstract String[] getSorts();
 

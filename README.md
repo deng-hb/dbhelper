@@ -7,7 +7,7 @@
 <dependency>
   <groupId>com.denghb</groupId>
   <artifactId>dbhelper</artifactId>
-  <version>3.0.1</version>
+  <version>3.0.3</version>
 </dependency>
 ```
 Or 

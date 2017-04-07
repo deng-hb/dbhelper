@@ -17,8 +17,6 @@ public @interface Column {
 
 	/**
 	 * 列名
-	 * 
-	 * @return
 	 */
 	String name();
 }

@@ -17,8 +17,6 @@ public @interface Id {
 
 	/**
 	 * 自增
-	 * 
-	 * @return
 	 */
 	boolean auto() default true;
 }

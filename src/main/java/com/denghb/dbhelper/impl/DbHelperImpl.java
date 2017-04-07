@@ -42,7 +42,6 @@ public class DbHelperImpl implements DbHelper {
      * 创建一条纪录
      *
      * @param object
-     * @return
      */
     public boolean insert(Object object) {
         // 用来存放sql语句
@@ -120,7 +119,8 @@ public class DbHelperImpl implements DbHelper {
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            return false;
         }
     }
 
@@ -128,7 +128,6 @@ public class DbHelperImpl implements DbHelper {
      * 更新一条纪录
      *
      * @param object
-     * @return
      */
     public boolean updateById(Object object) {
         // 用来存放sql语句
@@ -183,15 +182,17 @@ public class DbHelperImpl implements DbHelper {
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage(), e);
+            return false;
         }
         sql.append(" where ");
         if (null == idField) {
-            throw new RuntimeException("@Id not find");
+            log.error("@Id not find");
+            return false;
         }
         Column column = idField.getAnnotation(Column.class);
         if (null == column) {
-            throw new RuntimeException("@Id not find");
+            log.error("@Id not find");
+            return false;
         }
         sql.append('`');
         sql.append(column.name());
@@ -208,7 +209,6 @@ public class DbHelperImpl implements DbHelper {
      *
      * @param sql
      * @param args
-     * @return
      */
     public int execute(String sql, Object... args) {
         long start = System.currentTimeMillis();
@@ -328,7 +328,6 @@ public class DbHelperImpl implements DbHelper {
      * @param sql
      * @param clazz
      * @param args
-     * @return
      */
     public <T> T queryForObject(String sql, Class<T> clazz, Object... args) {
         List<T> list = list(sql, clazz, args);
@@ -343,7 +342,6 @@ public class DbHelperImpl implements DbHelper {
      *
      * @param clazz
      * @param id
-     * @return
      */
     public <T> T queryById(Class<T> clazz, Object id) {
         StringBuffer sb = new StringBuffer("select ");
@@ -368,7 +366,6 @@ public class DbHelperImpl implements DbHelper {
      *
      * @param clazz
      * @param id
-     * @return
      */
     public <T> boolean deleteById(Class<T> clazz, Object id) {
         StringBuffer sb = new StringBuffer("delete from ");

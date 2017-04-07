@@ -16,8 +16,6 @@ import java.lang.annotation.Target;
 public @interface Table {
 	/**
 	 * 表名
-	 * 
-	 * @return
 	 */
 	String name();
 
