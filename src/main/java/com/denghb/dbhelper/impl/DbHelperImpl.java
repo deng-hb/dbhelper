@@ -84,8 +84,8 @@ public class DbHelperImpl implements DbHelper {
                     // 如果参数值是null就直接跳过（不允许覆盖为null值，规范要求更新的每个字段都要有值，没有值就是空字符串）
                     continue;
                 }
-                if(null != id && null != value){
-                	idField = null;// ID有值不自动赋值
+                if (null != id && null != value) {
+                    idField = null;// ID有值不自动赋值
                 }
 
                 if (count != 0) {
@@ -105,23 +105,26 @@ public class DbHelperImpl implements DbHelper {
             sql.append(paramsSql);
             sql.append(')');
 
-            Object[] objects = params.toArray();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
 
-            // 执行insert
-            boolean res = 1 == execute(sql.toString(), objects);
+        Object[] objects = params.toArray();
+
+        // 执行insert
+        boolean res = 1 == execute(sql.toString(), objects);
+        try {
             // TODO 成功了获取自动生成的ID
             if (res && null != idField) {
                 Long id = queryForObject("SELECT LAST_INSERT_ID() as id", Long.class);
                 idField.setAccessible(true);
                 idField.set(object, id);
             }
-            return res;
-
-        } catch (Exception e) {
+        } catch (IllegalAccessException e) {
             log.error(e.getMessage(), e);
-        } finally {
-            return false;
         }
+        return res;
+
     }
 
     /**
