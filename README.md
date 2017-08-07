@@ -18,6 +18,8 @@ git clone https://github.com/deng-hb/dbhelper.git
 2、配置
 SpringBoot
 参考[spring-boot-dbhelper-demo](https://github.com/deng-hb/spring-boot-dbhelper-demo)
+logging配置（application.properties）：
+logging.level.com.denghb=DEBUG
 
 在Spring配置文件（applicationContext.xml）中增加
 ```xml
