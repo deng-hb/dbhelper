@@ -38,6 +38,14 @@ public class DbHelperImpl implements DbHelper {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public DbHelperImpl(){
+
+    }
+
+    public DbHelperImpl(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     /**
      * 创建一条纪录
      *
@@ -114,9 +122,10 @@ public class DbHelperImpl implements DbHelper {
         // 执行insert
         boolean res = 1 == execute(sql.toString(), objects);
         try {
+
             // TODO 成功了获取自动生成的ID
             if (res && null != idField) {
-                Long id = queryForObject("SELECT LAST_INSERT_ID() as id", Long.class);
+                Object id = queryForObject("SELECT LAST_INSERT_ID() as id", idField.getType());
                 idField.setAccessible(true);
                 idField.set(object, id);
             }

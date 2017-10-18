@@ -7,7 +7,7 @@
 <dependency>
   <groupId>com.denghb</groupId>
   <artifactId>dbhelper</artifactId>
-  <version>3.0.4</version>
+  <version>3.0.5</version>
 </dependency>
 ```
 Or 
@@ -18,8 +18,7 @@ git clone https://github.com/deng-hb/dbhelper.git
 2、配置
 SpringBoot
 参考[spring-boot-dbhelper-demo](https://github.com/deng-hb/spring-boot-dbhelper-demo)
-logging配置（application.properties）：
-logging.level.com.denghb=DEBUG
+
 
 在Spring配置文件（applicationContext.xml）中增加
 ```xml
@@ -41,7 +40,10 @@ public class DbHelperImpl implements DbHelper {
   	@Repository
 	private JdbcTemplate jdbcTemplate;
 ```
-
+Logging配置（application.properties/log4j.properties）：
+```
+logging.level.com.denghb=DEBUG
+```
 
 3、使用
 ```java
