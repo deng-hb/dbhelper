@@ -38,11 +38,11 @@ public class DbHelperImpl implements DbHelper {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public DbHelperImpl(){
+    public DbHelperImpl() {
 
     }
 
-    public DbHelperImpl(JdbcTemplate jdbcTemplate){
+    public DbHelperImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -92,7 +92,7 @@ public class DbHelperImpl implements DbHelper {
                     // 如果参数值是null就直接跳过（不允许覆盖为null值，规范要求更新的每个字段都要有值，没有值就是空字符串）
                     continue;
                 }
-                if (null != id && null != value) {
+                if (null != id) {
                     idField = null;// ID有值不自动赋值
                 }
 
@@ -122,8 +122,6 @@ public class DbHelperImpl implements DbHelper {
         // 执行insert
         boolean res = 1 == execute(sql.toString(), objects);
         try {
-
-            // TODO 成功了获取自动生成的ID
             if (res && null != idField) {
                 Object id = queryForObject("SELECT LAST_INSERT_ID() as id", idField.getType());
                 idField.setAccessible(true);
@@ -247,12 +245,14 @@ public class DbHelperImpl implements DbHelper {
         long rows = paging.getRows();
         if (0 != rows) {
             // 先查总数
-            String totalSql = "select count(*) as size ";
+            String totalSql = "select count(*) ";
 
             String tempSql = sql.toString().toLowerCase();
-            int fromIndex = tempSql.indexOf("from");
-            if (0 < fromIndex) {
-                totalSql += sql.substring(fromIndex, sql.length());
+            totalSql += sql.substring(tempSql.indexOf("from"), sql.length());
+
+            // fix group by
+            if (0 < totalSql.indexOf(" group ")) {
+                totalSql = "select count(*) from (" + totalSql + ") temp";
             }
 
             long total = queryForObject(totalSql, Long.class, objects);
@@ -279,7 +279,7 @@ public class DbHelperImpl implements DbHelper {
                 sql.append(" order by ");
 
                 sql.append('`');
-                sql.append(sorts[paging.getSortIndex()]);
+                sql.append(sorts[sortIndex]);
                 sql.append('`');
 
                 // 排序方式
